@@ -1,0 +1,2 @@
+import {NextResponse} from "next/server";import {plaidClient,Products,CountryCode} from "@/lib/plaid";
+export async function POST(){try{const client=plaidClient();const r=await client.linkTokenCreate({user:{client_user_id:"cohq-demo-user"},client_name:"Construction Office HQ",products:[Products.Transactions],country_codes:[CountryCode.Us],language:"en",transactions:{days_requested:90}});return NextResponse.json({link_token:r.data.link_token})}catch(e:any){return NextResponse.json({error:e?.message||"Unable to start Plaid Link"},{status:500})}}
